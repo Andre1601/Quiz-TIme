@@ -30,6 +30,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="/*" element={<HomePage />} />
           <Route path="/category" element={<CategoryPage />} />
           <Route path="/detail/:category" element={<DetailCategoryPage />} />
           <Route path="/custom" element={<CustomQuizPage />} />
