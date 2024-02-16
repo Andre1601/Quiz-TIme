@@ -15,7 +15,7 @@ type fetchDataProps = {
 
 const HomePage = () => {
   const setQuestions = [20];
-  const setTimes = [10];
+  const setTimes = [100];
   const storedData = localStorage.getItem("data");
   const getUnloadData = storedData !== null ? JSON.parse(storedData) : null;
   const navigate = useNavigate();
