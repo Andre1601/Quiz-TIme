@@ -1,4 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
+import arrowPrev from './../../assets/arrow_prev.svg'
 
 const AuthLayout = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const AuthLayout = () => {
           className="flex items-center w-fit gap-3 text-[#8692A6]"
         >
           <img
-            src="src\assets\arrow_prev.svg"
+            src={arrowPrev}
             alt="prev icon button"
             width={9.73}
             height={16.5}

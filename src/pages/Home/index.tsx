@@ -3,6 +3,8 @@ import QuizCard from "../../components/cards/QuizCard";
 import { categoryList, difficultyList, typeList } from "../../utils/constants";
 import { combineBasedCategory } from "../../utils/generateQuiz";
 
+import noQuizImage from "../../assets/no_quiz.webp";
+
 type fetchDataProps = {
   amount: number;
   category: string;
@@ -79,10 +81,7 @@ const HomePage = () => {
     <div className="flex flex-col h-full">
       {getUnloadData != null ? (
         <section className="flex justify-center items-center basis-1/2 gap-10 p-3">
-          <img
-            src="src\assets\no_quiz.webp"
-            className="max-w-52 max-h-52 rounded-md"
-          />
+          <img src={noQuizImage} className="max-w-52 max-h-52 rounded-md" />
           <div>
             <h2 className="text-2xl font-semibold mb-3 text-[#696F79]">
               Pause Quiz - Remember to Resume

@@ -4,6 +4,9 @@ import { useSignIn } from "@clerk/clerk-react";
 import { useState } from "react";
 import { OAuthStrategy } from "@clerk/types";
 
+import googleIcon from './../../assets/google_icon.svg'
+
+
 const SigninPage = () => {
   const { isLoaded, signIn, setActive } = useSignIn();
   const [emailAddress, setEmailAddress] = useState("");
@@ -74,7 +77,7 @@ const SigninPage = () => {
           className="relative flex rounded-2xl w-96 py-3 justify-center items-center text-sm shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]"
         >
           <img
-            src="src\assets\google_icon.svg"
+            src={googleIcon}
             width={24}
             height={24}
             className="absolute left-6"
