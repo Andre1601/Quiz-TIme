@@ -103,7 +103,7 @@ const HomePage = () => {
       ) : (
         <section className="flex justify-center items-center basis-1/2 gap-10 p-3">
           <img
-            src="src\assets\no_quiz.webp"
+            src={noQuizImage}
             className="max-w-52 max-h-52 rounded-md"
           />
           <div>
