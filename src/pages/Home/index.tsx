@@ -14,7 +14,8 @@ type fetchDataProps = {
 const HomePage = () => {
   const setQuestions = [20];
   const setTimes = [10];
-  const getUnloadData = JSON.parse(localStorage.getItem("data")) || null;
+  const storedData = localStorage.getItem("data");
+  const getUnloadData = storedData !== null ? JSON.parse(storedData) : null;
   const navigate = useNavigate();
 
   const allData = combineBasedCategory({
@@ -57,9 +58,11 @@ const HomePage = () => {
     const data = await response.json();
 
     const url = localStorage.getItem("url");
-    navigate(url, {
-      state: { fromApp: true, fromHome: { data, time, desc, url } },
-    });
+    if (url) {
+      navigate(url, {
+        state: { fromApp: true, fromHome: { data, time, desc, url } },
+      });
+    }
   };
 
   const handleContinueQuiz = () => {

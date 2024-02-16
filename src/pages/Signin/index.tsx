@@ -11,8 +11,7 @@ const SigninPage = () => {
 
   const navigate = useNavigate();
 
-  // start the sign In process.
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if (!isLoaded) {
       return;
@@ -28,11 +27,19 @@ const SigninPage = () => {
         await setActive({ session: result.createdSessionId });
         navigate("/");
       } else {
-        /*Investigate why the login hasn't completed */
         console.log(result);
       }
-    } catch (err: any) {
-      console.error("error", err.errors[0].longMessage);
+    } catch (err: unknown) {
+      if (
+        err instanceof Error &&
+        "errors" in err &&
+        Array.isArray(err.errors) &&
+        err.errors.length > 0
+      ) {
+        console.error("error", err.errors[0].longMessage);
+      } else {
+        console.error("Unknown error occurred:", err);
+      }
     }
   };
 
@@ -42,7 +49,7 @@ const SigninPage = () => {
       redirectUrl: "/sso-callback",
       redirectUrlComplete: "/",
     });
-  }
+  };
 
   return (
     <div className="flex items-center justify-center h-full">
@@ -62,7 +69,10 @@ const SigninPage = () => {
           <span>or</span>
           <hr className="flex-grow-[1]" />
         </div>
-        <button onClick={() => signInWith("oauth_google")} className="relative flex rounded-2xl w-96 py-3 justify-center items-center text-sm shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]">
+        <button
+          onClick={() => signInWith("oauth_google")}
+          className="relative flex rounded-2xl w-96 py-3 justify-center items-center text-sm shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px]"
+        >
           <img
             src="src\assets\google_icon.svg"
             width={24}

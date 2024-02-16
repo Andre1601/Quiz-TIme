@@ -17,21 +17,28 @@ const QuizPage = () => {
   }
 
   const [data] = useState(location.state?.fromHome.data);
+  const storedUrl = localStorage.getItem("url");
+  const storedCurrIndex = localStorage.getItem("currIndex");
+  const storedUserAnswers = localStorage.getItem("userAnswers");
   const [timeLeft, setTimeLeft] = useState(
     (localStorage.getItem("url") === location.pathname &&
       localStorage.getItem("timeLeft")) ||
       location.state?.fromHome.time
   );
   const [currIndex, setCurrIndex] = useState(
-    (localStorage.getItem("url") === location.pathname &&
-      parseInt(localStorage.getItem("currIndex"))) ||
+    (storedUrl === location.pathname &&
+      storedCurrIndex !== null &&
+      parseInt(storedCurrIndex)) ||
       0
   );
-  const [answers, setAnswers] = useState(Array<string>);
-  const [userAnswers, setUserAnswers] = useState(
-    (localStorage.getItem("url") === location.pathname &&
-      JSON.parse(localStorage.getItem("userAnswers"))) ||
-      Array<string>
+
+  const [answers, setAnswers] = useState<Array<string>>([]);
+
+  const [userAnswers, setUserAnswers] = useState<Array<string>>(
+    (storedUrl === location.pathname &&
+      storedUserAnswers !== null &&
+      JSON.parse(storedUserAnswers)) ||
+      []
   );
   const [status, setStatus] = useState(true);
   const [resultData, setResultData] = useState<ResultDataProps | undefined>(
@@ -102,9 +109,9 @@ const QuizPage = () => {
           JSON.stringify(location.state?.fromHome.desc)
         );
         localStorage.setItem("timeLeft", timeLeft);
-        localStorage.setItem("currIndex", currIndex);
+        localStorage.setItem("currIndex", currIndex.toString());
         localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
-        localStorage.setItem("status", status);
+        localStorage.setItem("status", status.toString());
         localStorage.setItem("url", location.state?.fromHome.url);
       } else {
         localStorage.removeItem("data");

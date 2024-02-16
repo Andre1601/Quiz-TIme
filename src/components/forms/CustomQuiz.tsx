@@ -2,19 +2,29 @@ import { useEffect, useState } from "react";
 import { categoryList, difficultyList, typeList } from "../../utils/constants";
 
 type DataState = {
-  "Number of Question": number | undefined;
-  Category: string | undefined;
-  Difficulty: string | undefined;
-  Type: string | undefined;
-  Time: number | undefined;
+  "Number of Question": number;
+  Category: string;
+  Difficulty: string;
+  Type: string;
+  Time: number;
 };
 
-const CustomQuizForm = ({onSubmit}) => {
-  const [getData, setData] = useState<DataState>();
+type CustomQuizFormProps = {
+  onSubmit: (data: DataState) => void;
+};
+
+const CustomQuizForm = ({ onSubmit }: CustomQuizFormProps) => {
+  const [getData, setData] = useState<DataState>({
+    "Number of Question": 1,
+    Category: 'any',
+    Difficulty: 'any',
+    Type: 'any',
+    Time: 1,
+  });
   const [number, setNumber] = useState<number>(1);
-  const [category, setCategory] = useState<string>('Any Category');
-  const [difficult, setDifficult] = useState<string>('Any Difficulty');
-  const [type, setType] = useState<string>('Any Type');
+  const [category, setCategory] = useState<string>("Any Category");
+  const [difficult, setDifficult] = useState<string>("Any Difficulty");
+  const [type, setType] = useState<string>("Any Type");
   const [time, setTime] = useState<number>(1);
 
   useEffect(() => {
@@ -28,8 +38,8 @@ const CustomQuizForm = ({onSubmit}) => {
   }, [category, difficult, number, time, type]);
 
   useEffect(() => {
-    onSubmit(getData)
-  },[getData])
+    onSubmit(getData);
+  }, [getData]);
 
   return (
     <form className="flex flex-col gap-4 text-[#696F79]">

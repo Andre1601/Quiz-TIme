@@ -47,7 +47,7 @@ const SignupPage = () => {
   }, [inputValues]);
 
   // This verifies the user using email code that is delivered.
-  const onPressVerify = async (e: { preventDefault: () => void; }) => {
+  const onPressVerify = async () => {
     if (!isLoaded) {
       return;
     }

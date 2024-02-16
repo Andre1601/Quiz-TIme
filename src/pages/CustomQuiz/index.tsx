@@ -11,9 +11,17 @@ type fetchDataProps = {
   time: number;
 };
 
+type DataProps = {
+  "Number of Question": number;
+  Category: string;
+  Difficulty: string;
+  Type: string;
+  Time: number;
+};
+
 const CustomQuizPage = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState();
+  const [data, setData] = useState<DataProps | null>(null);
 
   const fetchData = async ({
     amount,
@@ -37,22 +45,21 @@ const CustomQuizPage = () => {
           : type
       }`
     );
+    const data = await response.json();
     const desc = {
-      "Number Question": amount,
-      Category: category,
-      Difficulty: difficulty,
-      Type: type,
+      "Number Question":  amount,
+      Category: category === "Any Category" ? "Any" : category,
+      Difficulty: difficulty === "Any Difficulty" ? "Any" : difficulty,
+      Type: type === "Any Type" ? "Any" : type,
       Time: time,
     };
-    const data = await response.json();
-    const url =
-      "/quiz/" + btoa(category + difficulty + type + time);
+    const url = "/quiz/" + btoa(category + difficulty + type + time);
     navigate(url, {
       state: { fromApp: true, fromHome: { data, time, desc, url } },
     });
   };
 
-  const handleData = (data) => {
+  const handleData = (data: DataProps) => {
     setData(data);
   };
 
@@ -64,12 +71,13 @@ const CustomQuizPage = () => {
       <CustomQuizForm onSubmit={handleData} />
       <button
         onClick={() =>
+          data &&
           fetchData({
-            amount: data?.["Number of Question"],
-            category: data?.Category,
-            difficulty: data?.Difficulty,
-            type: data?.Type,
-            time: data?.Time,
+            amount: data["Number of Question"],
+            category: data.Category,
+            difficulty: data.Difficulty,
+            type: data.Type,
+            time: data.Time,
           })
         }
         className=" bg-[#8692A6] text-white font-semibold py-2 px-16 mt-6 rounded"
